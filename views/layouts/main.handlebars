@@ -7,23 +7,45 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="/css/trumbowyg.min.css">
+  <link rel="stylesheet" href="/css/style.css">
   <title>StoryBooks</title>
 </head>
 
 <body>
-  {{> _header}}
+  {{> _header}} {{#if user}} {{> _add-btn}} {{/if}}
   <main>
     <div class="container">
       {{{body}}}
     </div>
   </main>
+
+  {{> _footer}}
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <script src="/js/trumbowyg.min.js"></script>
 
   <script>
     $(document).ready(() => {
       $('.sidenav').sidenav();
+      $('select').formSelect();
+      $.trumbowyg.svgPath = '/css/icons.svg';
+      $('#trumbowyg').trumbowyg({
+        btns: [
+          ['undo', 'redo'], // Only supported in Blink browsers
+          ['formatting'],
+          ['strong', 'em', 'del'],
+          ['superscript', 'subscript'],
+          ['link'],
+          ['insertImage'],
+          ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+          ['unorderedList', 'orderedList'],
+          ['horizontalRule'],
+          ['removeformat'],
+          ['fullscreen']
+        ]
+      });
     });
   </script>
 
