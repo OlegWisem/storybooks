@@ -1,7 +1,5 @@
-module.exports = {
-  mongoURI:
-    'mongodb://storybook:qwerty123456@ds151228.mlab.com:51228/storybooks-dev',
-  googleClientID:
-    '321887248041-vt6pcj281t3teuuou1tn79hsfap7ribc.apps.googleusercontent.com',
-  googleClientSecret: 'tMBUI0YwYzW-rdifNHsgIOm_'
-};
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./keys_prod');
+} else {
+  module.exports = require('./keys_dev');
+}
