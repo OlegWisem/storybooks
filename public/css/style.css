@@ -27,3 +27,7 @@ footer {
 #delete-form {
   display: inline;
 }
+
+.success-msg {
+  border-left: 5px solid #4caf50;
+}

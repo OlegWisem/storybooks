@@ -30,15 +30,12 @@ router.get('/show/:id', (req, res) => {
           story: story
         });
       } else {
-        if (req.user) {
-          if (req.user.id == story.user._id) {
-            res.render('stories/show', {
-              story: story
-            });
-          } else {
-            res.redirect('/stories');
-          }
+        if (req.user && req.user.id == story.user._id) {
+          res.render('stories/show', {
+            story: story
+          });
         } else {
+          req.flash('error_msg', 'Not Authorized');
           res.redirect('/stories');
         }
       }
@@ -107,6 +104,7 @@ router.post('/', (req, res) => {
 
   // Create Story
   new Story(newStory).save().then(story => {
+    req.flash('success_msg', 'Story successfully added');
     res.redirect(`/stories/show/${story.id}`);
   });
 });
@@ -131,7 +129,8 @@ router.put('/:id', (req, res) => {
     story.allowComments = allowComments;
 
     story.save().then(story => {
-      res.redirect('/dashboard');
+      req.flash('success_msg', 'Story successfully edited');
+      res.redirect(`/stories/show/${story.id}`);
     });
   });
 });
@@ -139,6 +138,7 @@ router.put('/:id', (req, res) => {
 // Delete Story
 router.delete('/:id', (req, res) => {
   Story.remove({ _id: req.params.id }).then(() => {
+    req.flash('success_msg', 'Story successfully deleted');
     res.redirect('/dashboard');
   });
 });
@@ -157,6 +157,7 @@ router.post('/comment/:id', (req, res) => {
     story.comment.push(newComment);
 
     story.save().then(story => {
+      req.flash('success_msg', 'Comment successfully added');
       res.redirect(`/stories/show/${story.id}`);
     });
   });
